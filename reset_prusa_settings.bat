@@ -7,6 +7,7 @@ set "option2=Exit"
 
 :: Main menu loop
 :mainMenu
+set "var="  :: Reset the input variable
 cls
 echo ===== PrusaSlicer Configuration Tool =====
 echo.
@@ -19,6 +20,7 @@ set /P "var=Choose an option [1-2]: "
 if "%var%"=="1" goto :reset_prusa_slicer
 if "%var%"=="2" exit /b
 
+cls
 echo [ERROR] Invalid selection. Please choose a valid option.
 pause
 goto mainMenu
