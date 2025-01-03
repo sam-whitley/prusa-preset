@@ -7,7 +7,6 @@ set "option2=Exit"
 
 :: Main menu loop
 :mainMenu
-set "var=" 
 cls
 echo ===== PrusaSlicer Configuration Tool =====
 echo.
@@ -43,14 +42,15 @@ if exist "%BACKUP_CONFIG_FILE%" (
     
     :: Compare the existing and backup files
     fc /B "%LOCAL_CONFIG_FILE%" "%BACKUP_CONFIG_FILE%" >nul
-    if %errorlevel%==0 (
-        echo [INFO] Local configuration file matches the backup. No changes needed.
-        pause
-        goto mainMenu
-    ) else (
+    if errorlevel 1 (
+        echo [INFO] Local configuration file differs from the backup.
         echo [INFO] Restoring the PrusaSlicer configuration from backup...
         copy /Y "%BACKUP_CONFIG_FILE%" "%LOCAL_CONFIG_FILE%" >nul
         echo [SUCCESS] PrusaSlicer configuration restored from backup successfully!
+    ) else (
+        echo [INFO] Local configuration file matches the backup. No changes needed.
+        pause
+        goto mainMenu
     )
 ) else (
     echo [INFO] No backup configuration file found. Downloading the default configuration from GitHub...
@@ -79,7 +79,7 @@ set TEMP_FILE=%BACKUP_CONFIG_FILE%.tmp
 > %TEMP_FILE% (
     for /f "tokens=* delims=" %%i in (%BACKUP_CONFIG_FILE%) do (
         set "line=%%i"
-        set "line=!line:DefaultUser=%USERNAME%!"
+        set "line=!line:DefaultUser=%USERNAME%! "
         echo !line!
     )
 )
