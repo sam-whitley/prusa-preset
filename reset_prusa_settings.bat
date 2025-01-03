@@ -7,7 +7,7 @@ set "option2=Exit"
 
 :: Main menu loop
 :mainMenu
-set "var="  :: Reset the input variable
+set "var=" 
 cls
 echo ===== PrusaSlicer Configuration Tool =====
 echo.
